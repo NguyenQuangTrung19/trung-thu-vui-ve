@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Trung Thu Vui Vẻ 🎑</title>
+<style>
+:root{
+  --bg-start:#0b0f2b;
+  --bg-end:#1a2258;
+  --accent:#ffd166;
+  --lantern:#ffb347;
+  --lantern-dark:#e07a3f;
+}
+html,body{
+  height:100%; margin:0;
+  background: radial-gradient(1200px 800px at 70% 10%, #27307a 0%, var(--bg-start) 35%, var(--bg-end) 100%);
+  overflow:hidden; color:#fff; font-family:system-ui, sans-serif;
+}
+
+/* ===== Mặt trăng lung linh ===== */
+.moon-area{position:fixed;top:5vh;right:8vw;width:180px;height:180px;z-index:1;}
+.moon-glow{
+  position:absolute;inset:-80px;
+  background:radial-gradient(circle at 50% 50%, #ffd16644 0%, #ffd16622 40%, #0000 80%);
+  border-radius:50%;animation:glow 6s ease-in-out infinite alternate;
+  filter:blur(20px);
+}
+@keyframes glow{
+  0%{opacity:.8;transform:scale(1);}
+  100%{opacity:1;transform:scale(1.05);}
+}
+.moon{
+  position:absolute;inset:0;border-radius:50%;
+  background:radial-gradient(circle at 30% 30%, #fffefc 0%, #fff7 40%, #ffeaa7 60%, #ffd166 70%, #e8b24b 100%);
+  box-shadow:0 0 50px 10px #ffd16688;
+  overflow:hidden;
+}
+/* vết trên mặt trăng */
+.crater{position:absolute;border-radius:50%;opacity:.25;background:radial-gradient(circle at 30% 30%, #0000, #0003 60%, #0005 100%)}
+.c1{width:30px;height:30px;left:30%;top:40%}
+.c2{width:18px;height:18px;left:58%;top:28%}
+.c3{width:22px;height:22px;left:52%;top:62%}
+
+/* silhoutte chị Hằng và cây đa */
+.hangnga, .tree{
+  position:absolute;bottom:0;left:0;width:100%;height:100%;
+  background-repeat:no-repeat;background-position:center bottom;
+  background-size:80% auto;opacity:.12;mix-blend-mode:multiply;
+}
+.hangnga{background-image:url('https://i.imgur.com/N4YgZcP.png');} /* silhoutte chị Hằng */
+.tree{background-image:url('https://i.imgur.com/lpgRO8z.png');} /* bóng cây đa */
+
+/* mây bay ngang qua mặt trăng */
+.cloud-moon{position:absolute;top:30%;left:-120%;width:350%;height:80px;background:radial-gradient(closest-side,#ffffff33,#ffffff05);filter:blur(14px);animation:cloudMove 80s linear infinite;}
+@keyframes cloudMove{from{transform:translateX(0);}to{transform:translateX(100%);}}
+
+/* ===== Cổng nhập mật khẩu ===== */
+.gate{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;background:linear-gradient(180deg,#0b0f2bd9,#0b0f2bf0);z-index:999;transition:opacity .6s ease;}
+.gate.hidden{opacity:0;pointer-events:none}
+.card{background:#111a;backdrop-filter:blur(6px);border:1px solid #ffffff22;border-radius:16px;padding:28px 22px;width:min(420px,90vw);box-shadow:0 10px 30px #0008}
+.title{text-align:center;font-size:clamp(22px,2.8vw,28px);font-weight:700}
+.input-row{display:flex;gap:10px;margin-top:12px}
+input[type="text"]{flex:1;padding:12px 14px;border-radius:12px;border:1px solid #ffffff33;background:#0b1020;color:#fff;outline:none}
+button{padding:12px 16px;border-radius:12px;border:0;cursor:pointer;font-weight:700;background:linear-gradient(135deg,#ff7eb3,#ffd166);color:#1b1330;box-shadow:0 6px 18px #0006;transition:transform .1s}
+button:active{transform:translateY(1px)}
+.hint{font-size:12px;opacity:.8;text-align:center}
+.error{color:#ff8aa0;min-height:20px;text-align:center}
+.shake{animation:shake .35s ease}
+@keyframes shake{10%,90%{transform:translateX(-2px);}20%,80%{transform:translateX(3px);}30%,50%,70%{transform:translateX(-5px);}40%,60%{transform:translateX(5px);}}
+
+/* ===== Các hiệu ứng khác giữ nguyên (đèn lồng, pháo hoa, lời chúc, thỏ ngọc...) ===== */
+.lanterns,.greeting,.controls,.rabbit,.ear,canvas#fireworks{position:fixed;}
+.lanterns{inset:0;overflow:hidden;pointer-events:none;z-index:2}
+.lantern-wrap{position:absolute;transform-origin:50% 100%;animation:sway 3.3s ease-in-out infinite;}
+.lantern{position:absolute;width:38px;height:54px;background:linear-gradient(180deg,var(--lantern),var(--lantern-dark));border-radius:12px 12px 18px 18px/16px 16px 28px 28px;box-shadow:inset 0 -6px 10px #0004,0 8px 20px #0007;transform-origin:50% 100%;animation:rise 14s linear forwards;}
+.lantern::before{content:"";position:absolute;top:-12px;left:50%;transform:translateX(-50%);width:26px;height:8px;background:#743a1f;border-radius:6px}
+.lantern::after{content:"";position:absolute;bottom:-12px;left:50%;transform:translateX(-50%);width:16px;height:16px;background:radial-gradient(circle at 30% 30%,#fff,#ffcc66 60%,#a85d26);border-radius:4px}
+.flame{position:absolute;left:50%;bottom:6px;transform:translateX(-50%);width:10px;height:16px;background:radial-gradient(circle at 50% 30%,#fff8 0,#ffd166 40%,#ff7a00 70%,#0000 72%);border-radius:50% 50% 60% 60%;animation:flicker .18s infinite}
+@keyframes flicker{50%{transform:translateX(-50%) scaleY(1.08)}100%{transform:translateX(calc(-50% + .4px)) scale(.98)}}
+@keyframes rise{from{transform:translateY(120vh)}to{transform:translateY(-20vh)}}
+@keyframes sway{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
+.greeting{width:100%;bottom:8vh;text-align:center;font-size:clamp(22px,5vw,48px);font-weight:800;color:#fff;text-shadow:0 0 12px #ffd166aa,0 0 30px #ff7eb377;letter-spacing:1px;filter:drop-shadow(0 6px 12px #0009);z-index:3;opacity:0;transition:opacity 1s ease;}
+.greeting.show{opacity:1}
+.greeting span{display:inline-block;animation:floaty 3.2s ease-in-out infinite}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.controls{top:16px;left:16px;display:flex;gap:10px;z-index:5}
+.ctrl{background:#ffffff12;border:1px solid #ffffff26;color:#fff;padding:10px 12px;border-radius:12px;backdrop-filter:blur(6px);cursor:pointer}
+.rabbit{bottom:8vh;right:10vw;width:90px;height:90px;filter:drop-shadow(0 0 8px #fff4)}
+.rabbit::before{content:"";position:absolute;width:60px;height:50px;border-radius:50% 50% 40% 40%;left:15px;bottom:10px;background:#fff}
+.rabbit::after{content:"";position:absolute;width:36px;height:36px;border-radius:50%;left:40px;bottom:36px;background:#fff;box-shadow:-12px 30px 0 8px #fff}
+.ear{right:calc(10vw + 38px);bottom:calc(8vh + 68px);width:12px;height:34px;background:#fff;border-radius:40% 40% 60% 60%;transform:rotate(12deg);box-shadow:14px -2px 0 0 #fff}
+canvas#fireworks{inset:0;z-index:1}
+</style>
+</head>
+<body>
+<audio id="music" preload="auto" loop>
+  <source src="audio.mp3" type="audio/mpeg" />
+</audio>
+
+<!-- 🌕 Khu vực mặt trăng -->
+<div class="moon-area">
+  <div class="moon-glow"></div>
+  <div class="moon">
+    <div class="crater c1"></div><div class="crater c2"></div><div class="crater c3"></div>
+    <div class="hangnga"></div>
+    <div class="tree"></div>
+    <div class="cloud-moon"></div>
+  </div>
+</div>
+
+<!-- Các lớp hiệu ứng còn lại -->
+<canvas id="fireworks"></canvas>
+<div class="lanterns" id="lanterns"></div>
+<div class="controls">
+  <button class="ctrl" id="spawn">Thả thêm đèn</button>
+  <button class="ctrl" id="toggleMusic">Tắt/Bật nhạc</button>
+</div>
+<div class="greeting" id="greeting">
+  <span>Ch</span><span>ú</span><span>c</span><span>&nbsp;</span>
+  <span>X</span><span>uâ</span><span>n</span><span>&nbsp;</span>
+  <span>Th</span><span>a</span><span>nh</span><span>&nbsp;</span>
+  <span>b</span><span>é</span><span>&nbsp;</span>
+  <span>T</span><span>r</span><span>u</span><span>n</span><span>g</span><span>&nbsp;</span>
+  <span>T</span><span>h</span><span>u</span><span>&nbsp;</span>
+  <span>v</span><span>u</span><span>i</span><span>&#160;</span><span>v</span><span>ẻ</span>
+</div>
+<div class="rabbit"></div><div class="ear"></div>
+
+<!-- Cổng mật khẩu -->
+<div class="gate" id="gate">
+  <div class="card" id="card">
+    <div class="title">🎑 Mở cổng Trung Thu</div>
+    <div class="hint">Nhập mật khẩu để vào </div>
+    <div class="input-row">
+      <input id="pwd" type="text" placeholder="Nhập mật khẩu" autocomplete="off" />
+      <button id="enterBtn">Vào</button>
+    </div>
+    <div class="error" id="error"></div>
+  </div>
+</div>
+
+<script>
+const CORRECT="151220";
+const gate=document.getElementById('gate'),card=document.getElementById('card'),
+pwd=document.getElementById('pwd'),btn=document.getElementById('enterBtn'),
+err=document.getElementById('error'),music=document.getElementById('music'),
+greeting=document.getElementById('greeting'),lanternWrap=document.getElementById('lanterns');
+
+function unlock(){
+  gate.classList.add('hidden');
+  greeting.classList.add('show');
+  music.volume=0.7;music.play().catch(()=>{});
+  for(let i=0;i<12;i++)createLantern(true);
+  for(let i=0;i<6;i++)setTimeout(()=>burstRandom(),600*i);
+  if(!lanternTimer)startLanterns();
+}
+function wrong(){
+  err.textContent='Sai mật khẩu rồi, thử lại nhé ✨';
+  card.classList.remove('shake');void card.offsetWidth;card.classList.add('shake');
+}
+btn.onclick=()=>{pwd.value.trim()===CORRECT?unlock():wrong();}
+pwd.onkeydown=e=>{if(e.key==='Enter')btn.click();};
+
+function createLantern(){
+  const wrap=document.createElement('div');
+  wrap.className='lantern-wrap';
+  const el=document.createElement('div');el.className='lantern';
+  const flame=document.createElement('div');flame.className='flame';el.appendChild(flame);
+  const size=0.6+Math.random()*0.9;
+  el.style.transform=`scale(${size})`;wrap.style.left=Math.random()*100+'vw';
+  el.style.animationDuration=(12+Math.random()*8)+'s';
+  wrap.style.animationDuration=(2.6+Math.random()*1.6)+'s';
+  wrap.style.opacity=0.9;wrap.appendChild(el);lanternWrap.appendChild(wrap);
+  el.addEventListener('animationend',()=>wrap.remove());
+}
+const c=document.getElementById('fireworks');const ctx=c.getContext('2d');
+let cw=window.innerWidth,ch=window.innerHeight;c.width=cw;c.height=ch;
+window.addEventListener('resize',()=>{cw=innerWidth;ch=innerHeight;c.width=cw;c.height=ch;});
+const particles=[];
+function rnd(a,b){return Math.random()*(b-a)+a;}
+function burst(x,y,colors){for(let i=0;i<80;i++){particles.push({x,y,vx:rnd(-3,3),vy:rnd(-3,3),life:70+Math.random()*20,color:colors[Math.floor(Math.random()*colors.length)],size:1+Math.random()*2});}}
+function burstRandom(){const x=rnd(cw*0.1,cw*0.9),y=rnd(ch*0.1,ch*0.5);burst(x,y,['#ffd166','#ff7eb3','#69f0ae','#80d0ff','#ffe29f']);}
+function loop(){ctx.fillStyle='rgba(11,15,43,0.25)';ctx.fillRect(0,0,cw,ch);
+for(let i=particles.length-1;i>=0;i--){const p=particles[i];p.vy+=0.015;p.x+=p.vx;p.y+=p.vy;p.life--;
+if(p.life<=0){particles.splice(i,1);continue;}ctx.beginPath();ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+ctx.fillStyle=p.color;ctx.globalCompositeOperation='screen';ctx.fill();ctx.globalCompositeOperation='source-over';}
+requestAnimationFrame(loop);}loop();
+let lanternTimer=null;
+function startLanterns(){lanternTimer=setInterval(()=>{createLantern();if(Math.random()<0.3)burstRandom();},1400);}
+document.getElementById('spawn').onclick=()=>{for(let i=0;i<8;i++)createLantern();burstRandom();}
+document.getElementById('toggleMusic').onclick=()=>{music.paused?music.play():music.pause();}
+</script>
+</body>
+</html>
