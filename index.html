@@ -18,42 +18,146 @@ html,body{
   overflow:hidden; color:#fff; font-family:system-ui, sans-serif;
 }
 
-/* ===== Mặt trăng lung linh ===== */
-.moon-area{position:fixed;top:5vh;right:8vw;width:180px;height:180px;z-index:1;}
-.moon-glow{
-  position:absolute;inset:-80px;
-  background:radial-gradient(circle at 50% 50%, #ffd16644 0%, #ffd16622 40%, #0000 80%);
-  border-radius:50%;animation:glow 6s ease-in-out infinite alternate;
-  filter:blur(20px);
+/* ===== 🌕 Mặt trăng lung linh, sáng rõ ===== */
+.moon-area{
+  position:fixed;
+  top:6vh;
+  right:8vw;
+  width:180px;
+  height:180px;
+  z-index:50; /* ✅ cao hơn đèn lồng & pháo hoa */
 }
+
+.moon-glow{
+  position:absolute;
+  inset:-100px;
+  background:radial-gradient(circle at 50% 50%, #ffd16655 0%, #ffd16633 40%, #0000 80%);
+  border-radius:50%;
+  animation:glow 5s ease-in-out infinite alternate;
+  filter:blur(35px);
+  opacity:0.9;
+}
+
 @keyframes glow{
   0%{opacity:.8;transform:scale(1);}
-  100%{opacity:1;transform:scale(1.05);}
+  100%{opacity:1;transform:scale(1.06);}
 }
+
 .moon{
-  position:absolute;inset:0;border-radius:50%;
-  background:radial-gradient(circle at 30% 30%, #fffefc 0%, #fff7 40%, #ffeaa7 60%, #ffd166 70%, #e8b24b 100%);
-  box-shadow:0 0 50px 10px #ffd16688;
+  position:absolute;
+  inset:0;
+  border-radius:50%;
+  background:radial-gradient(circle at 30% 30%, #fff 0%, #fff8 25%, #ffeaa7 60%, #ffd166 75%, #e8b24b 100%);
+  box-shadow:0 0 60px 15px #ffd166aa;
   overflow:hidden;
 }
-/* vết trên mặt trăng */
-.crater{position:absolute;border-radius:50%;opacity:.25;background:radial-gradient(circle at 30% 30%, #0000, #0003 60%, #0005 100%)}
-.c1{width:30px;height:30px;left:30%;top:40%}
-.c2{width:18px;height:18px;left:58%;top:28%}
-.c3{width:22px;height:22px;left:52%;top:62%}
 
-/* silhoutte chị Hằng và cây đa */
-.hangnga, .tree{
-  position:absolute;bottom:0;left:0;width:100%;height:100%;
-  background-repeat:no-repeat;background-position:center bottom;
-  background-size:80% auto;opacity:.12;mix-blend-mode:multiply;
+/* ✅ Rõ vết mặt trăng */
+.crater{
+  position:absolute;
+  border-radius:50%;
+  opacity:.35;
+  background:radial-gradient(circle at 30% 30%, #0000, #0003 60%, #0005 100%);
 }
-.hangnga{background-image:url('https://i.imgur.com/N4YgZcP.png');} /* silhoutte chị Hằng */
-.tree{background-image:url('https://i.imgur.com/lpgRO8z.png');} /* bóng cây đa */
+.c1{width:28px;height:28px;left:32%;top:38%;}
+.c2{width:18px;height:18px;left:58%;top:28%;}
+.c3{width:22px;height:22px;left:52%;top:60%;}
 
-/* mây bay ngang qua mặt trăng */
-.cloud-moon{position:absolute;top:30%;left:-120%;width:350%;height:80px;background:radial-gradient(closest-side,#ffffff33,#ffffff05);filter:blur(14px);animation:cloudMove 80s linear infinite;}
-@keyframes cloudMove{from{transform:translateX(0);}to{transform:translateX(100%);}}
+/* ✅ Tăng độ rõ silhouette */
+.hangnga,.tree{
+  position:absolute;
+  bottom:0;left:0;width:100%;height:100%;
+  background-repeat:no-repeat;
+  background-position:center bottom;
+  background-size:80% auto;
+  opacity:.18;
+  filter:brightness(1.5);
+  mix-blend-mode:soft-light;
+}
+.hangnga{background-image:url('https://i.imgur.com/N4YgZcP.png');}
+.tree{background-image:url('https://i.imgur.com/lpgRO8z.png');}
+
+/* ✅ Mây bay nhẹ qua mặt trăng */
+.cloud-moon{
+  position:absolute;
+  top:40%;
+  left:-120%;
+  width:350%;
+  height:90px;
+  background:radial-gradient(closest-side,#ffffff55,#ffffff00);
+  filter:blur(18px);
+  animation:cloudMove 90s linear infinite;
+  opacity:.5;
+}
+@keyframes cloudMove{
+  from{transform:translateX(0);}
+  to{transform:translateX(100%);}
+}
+
+/* ===== 🌊 Hồ nước + phản chiếu trăng ===== */
+.lake{
+  position:fixed; left:0; right:0; bottom:0; height:28vh;
+  z-index:2; /* ở trước pháo hoa (z=1) nhưng sau đèn lồng */
+  pointer-events:none; overflow:hidden;
+  background:
+    radial-gradient(80vw 30vh at 70% 0%, #ffffff0f, #0000 60%),
+    linear-gradient(to top, #0b0f2bEE 0%, #0b0f2bCC 40%, #0b0f2b00 100%);
+}
+
+/* chuyển sóng nhẹ nhàng trên mặt hồ */
+.lake::after{
+  content:"";
+  position:absolute; inset:0;
+  background:
+    repeating-linear-gradient(
+      -5deg,
+      #ffffff07 0px, #ffffff07 2px,
+      #0000 3px, #0000 9px
+    );
+  animation:waveShift 10s linear infinite;
+  mix-blend-mode:screen;
+  opacity:.5;
+}
+@keyframes waveShift{
+  from{transform:translateX(0)}
+  to{transform:translateX(60px)}
+}
+
+/* bản sao mặt trăng lật ngược (reflection) */
+.moon-reflection{
+  position:absolute; right:8vw; bottom:0; /* khớp với .moon-area (right:8vw) */
+  width:180px; height:180px;
+  transform:scaleY(-1);
+  filter:url(#ripple) blur(1px);
+  opacity:.55;
+  /* làm mờ dần theo chiều sâu nước */
+  -webkit-mask-image: linear-gradient(to bottom, #fff 0%, #fff8 30%, #0000 100%);
+          mask-image: linear-gradient(to bottom, #fff 0%, #fff8 30%, #0000 100%);
+}
+
+/* mặt trăng “copy” cho phần phản chiếu (không dùng glow để đỡ chói) */
+.moon-copy{
+  position:absolute; inset:0; border-radius:50%;
+  background:radial-gradient(circle at 30% 30%, #fff 0%, #fff8 25%, #ffeaa7 60%, #ffd166 75%, #e8b24b 100%);
+  overflow:hidden;
+}
+.moon-copy .crater{position:absolute;border-radius:50%;
+  opacity:.28; background:radial-gradient(circle at 30% 30%, #0000, #0003 60%, #0005 100%)}
+.moon-copy .c1{width:28px;height:28px;left:32%;top:38%}
+.moon-copy .c2{width:18px;height:18px;left:58%;top:28%}
+.moon-copy .c3{width:22px;height:22px;left:52%;top:60%}
+
+/* làm rõ silhouette trong phần phản chiếu một chút */
+.moon-copy .hangnga, .moon-copy .tree{
+  position:absolute; left:0; bottom:0; width:100%; height:100%;
+  background-repeat:no-repeat; background-position:center bottom; background-size:80% auto;
+  opacity:.18; filter:brightness(1.3); mix-blend-mode:soft-light;
+}
+.moon-copy .hangnga{background-image:url('https://i.imgur.com/N4YgZcP.png');}
+.moon-copy .tree{background-image:url('https://i.imgur.com/lpgRO8z.png');}
+
+/* đảm bảo đèn lồng nổi phía trên mặt hồ */
+.lanterns{ z-index:3; } /* override giá trị cũ (nếu có) */
 
 /* ===== Cổng nhập mật khẩu ===== */
 .gate{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;background:linear-gradient(180deg,#0b0f2bd9,#0b0f2bf0);z-index:999;transition:opacity .6s ease;}
@@ -100,11 +204,17 @@ canvas#fireworks{inset:0;z-index:1}
 
 <!-- 🌕 Khu vực mặt trăng -->
 <div class="moon-area">
+  <!-- quầng sáng -->
   <div class="moon-glow"></div>
+  <!-- trăng -->
   <div class="moon">
-    <div class="crater c1"></div><div class="crater c2"></div><div class="crater c3"></div>
+    <div class="crater c1"></div>
+    <div class="crater c2"></div>
+    <div class="crater c3"></div>
+    <!-- bóng chị Hằng và cây đa -->
     <div class="hangnga"></div>
     <div class="tree"></div>
+    <!-- mây bay ngang -->
     <div class="cloud-moon"></div>
   </div>
 </div>
@@ -125,7 +235,8 @@ canvas#fireworks{inset:0;z-index:1}
   <span>T</span><span>h</span><span>u</span><span>&nbsp;</span>
   <span>v</span><span>u</span><span>i</span><span>&#160;</span><span>v</span><span>ẻ</span>
 </div>
-<div class="rabbit"></div><div class="ear"></div>
+<div class="rabbit"></div>
+<div class="ear"></div>
 
 <!-- Cổng mật khẩu -->
 <div class="gate" id="gate">
@@ -139,6 +250,37 @@ canvas#fireworks{inset:0;z-index:1}
     <div class="error" id="error"></div>
   </div>
 </div>
+
+<!-- 🌊 Hồ nước + phản chiếu trăng -->
+<div class="lake">
+  <!-- SVG filter tạo gợn sóng -->
+  <svg width="0" height="0" style="position:absolute">
+    <filter id="ripple">
+      <!-- nhiễu Perlin để tạo sóng -->
+      <feTurbulence type="fractalNoise" baseFrequency="0.012 0.035" numOctaves="2" seed="7" result="noise">
+        <animate attributeName="baseFrequency" dur="12s"
+                 values="0.012 0.035; 0.02 0.06; 0.012 0.035" repeatCount="indefinite"/>
+      </feTurbulence>
+      <!-- làm lệch ảnh theo noise -->
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="8" xChannelSelector="R" yChannelSelector="G">
+        <animate attributeName="scale" dur="10s"
+                 values="6;9;6" repeatCount="indefinite"/>
+      </feDisplacementMap>
+    </filter>
+  </svg>
+
+  <!-- bản sao mặt trăng để phản chiếu -->
+  <div class="moon-reflection">
+    <div class="moon-copy">
+      <div class="crater c1"></div>
+      <div class="crater c2"></div>
+      <div class="crater c3"></div>
+      <div class="hangnga"></div>
+      <div class="tree"></div>
+    </div>
+  </div>
+</div>
+
 
 <script>
 const CORRECT="151220";
